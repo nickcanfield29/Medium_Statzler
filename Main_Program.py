@@ -185,8 +185,6 @@ def clean_time(time_text):
 def write_to_excel(story_data):
     today = str(datetime.datetime.now().date())
 
-    print(story_data)
-
     MasterSheet = "Medium Stats - " + str(today)
 
     print("*****************")
