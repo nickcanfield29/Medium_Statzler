@@ -1,3 +1,4 @@
+![alt text](https://github.com/nickcanfield29/Medium_Statzler/blob/master/Statzler_Banner.jpg?raw=true)
 ![alt text](https://github.com/nickcanfield29/Medium_Statzler/blob/master/Statzler_Logo_Small.jpg?raw=true)
 
 # INFO
