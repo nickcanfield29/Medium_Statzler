@@ -23,10 +23,10 @@ global time_authentication
 time_authentication = 15
 
 # GOOGLE SHEET INFO
-global google_sheet_workbook = "Medium Data" 
-google_sheet_workbook = "Medium Data" #This is the name of your Google Sheets workbook that you have already created where you want to save the data
+global google_sheet_workbook
+google_sheet_workbook = "Medium Data"  # This is the name of your Google Sheets workbook that you have already created where you want to save the data
 global google_sheet_workbook_sheet
-google_sheet_workbook_sheet = "Medium Data" #This is the name of the Google Sheets sheet inside of your workbook
+google_sheet_workbook_sheet = "Medium Data"  # This is the name of the Google Sheets sheet inside of your workbook
 
 # Time to switch to new pages in seconds
 global time_switchpages
@@ -34,7 +34,6 @@ time_switchpages = 10
 
 global today
 today = str(datetime.datetime.now().date())
-
 
 ############################ GOOGLE CHROMEDRIVE & API CREDS INFO
 global path_chromedriver
@@ -44,13 +43,14 @@ path_chromedriver = "C:/Users/......exe"
 
 global google_api_creds_filepath
 google_api_creds_filepath = "C:/Users/.....json"
+
+
 # To get your Google Sheets credentials .json file, follow the steps here: https://www.analyticsvidhya.com/blog/2020/07/read-and-update-google-spreadsheets-with-python/
 
 
 ############################ METHODS
 
 def login_google():
-    
     # File path of your chromedriver.exe file
     global path_chromedriver
 
@@ -59,12 +59,12 @@ def login_google():
         print("Please download the Selenium Chromedriver and put the .exe filepath in the global variable spot above.")
         exit()
 
-    if len(creds_path_file) == 0:
+    if len(google_api_creds_filepath) == 0:
         print("ERROR!")
-        print("Please get a Google Sheets API Credentials file from here: https://cloud.google.com/docs/authentication/production#cloud-console")
+        print(
+            "Please get a Google Sheets API Credentials file from here: https://cloud.google.com/docs/authentication/production#cloud-console")
         exit()
 
-    
     # initialize Selenium webdriver
     global browser
     browser = webdriver.Chrome(path_chromedriver)
@@ -82,7 +82,7 @@ def login_google():
 
     try:
 
-        #Will try to login to Medium.com using Google Login
+        # Will try to login to Medium.com using Google Login
 
         google_button = browser.find_element_by_xpath('//button[0]').click()
 
@@ -116,6 +116,7 @@ def login_google():
     print("************************************")
     print("Let's start grabbing stats!")
 
+
 #####
 #####
 
@@ -124,8 +125,8 @@ def mkdir(directory):
     if not os.path.exists(directory):
         os.makedirs(directory)
 
-def clean_number(number):
 
+def clean_number(number):
     number = str(number).lower()
 
     try:
@@ -139,7 +140,7 @@ def clean_number(number):
         if "k" in number:
             number = number.replace("k", "")
             number = float(number)
-            number = number*1000
+            number = number * 1000
 
         else:
             number = int(float(number))
@@ -151,7 +152,6 @@ def clean_number(number):
 
 
 def clean_time(time_text):
-
     time_text = str(time_text)
     has_hours = False
     has_min = False
@@ -163,13 +163,13 @@ def clean_time(time_text):
     if "hr" in time_text.lower():
         has_hours = True
         hr_position = time_text.find("hr")
-        hours = int(time_text[0:hr_position-1].lstrip().rstrip())
+        hours = int(time_text[0:hr_position - 1].lstrip().rstrip())
 
     if "min" in time_text.lower():
         has_min = True
         min_position = time_text.find("min")
         if has_hours == True:
-            minutes = int(time_text[hr_position+3:min_position-1].lstrip().rstrip())
+            minutes = int(time_text[hr_position + 3:min_position - 1].lstrip().rstrip())
         else:
             minutes = int(time_text[0:min_position - 1].lstrip().rstrip())
 
@@ -181,11 +181,10 @@ def clean_time(time_text):
             seconds = int(time_text[0:sec_position - 1].lstrip().rstrip())
 
     # Returns Time in Hours
-    return ((hours*60) + minutes + (seconds/60))
+    return ((hours * 60) + minutes + (seconds / 60))
 
 
 def write_to_excel(story_data):
-
     today = str(datetime.datetime.now().date())
 
     print(story_data)
@@ -199,7 +198,7 @@ def write_to_excel(story_data):
     fileName = "{parent}/{file}.xlsx".format(parent=parentDir, file=MasterSheet)
 
     workbook = xlsxwriter.Workbook(fileName)
-    #ERROR!
+    # ERROR!
     worksheet = workbook.add_worksheet()
     row = 1
 
@@ -218,7 +217,6 @@ def write_to_excel(story_data):
     row += 1
 
     for story in story_data:
-
         worksheet.write('A' + str(row), today)
         worksheet.write('B' + str(row), story['Title'])
         worksheet.write('C' + str(row), story['Link'])
@@ -236,8 +234,7 @@ def write_to_excel(story_data):
 
 
 def write_to_gsheet(story_data):
-
-    #Connects to your Google Sheet and writes the data into the next empty rows
+    # Connects to your Google Sheet and writes the data into the next empty rows
 
     print("Connecting to your Google Sheets.")
 
@@ -279,8 +276,9 @@ def write_to_gsheet(story_data):
 
                 row_to_update = str(('A' + str(gsheet_row) + ':J' + str(gsheet_row)))
                 new_row_values = [[today, story['Title'], story['Link'], story['Published Date'], story['Publication'],
-                         clean_number(story['Views']), story['Earnings'], clean_time(story['Member Total Time Viewed']),
-                         clean_time(story['Average Time Viewed']), clean_number(story['Fans'])]]
+                                   clean_number(story['Views']), story['Earnings'],
+                                   clean_time(story['Member Total Time Viewed']),
+                                   clean_time(story['Average Time Viewed']), clean_number(story['Fans'])]]
 
                 sheet.update(row_to_update, new_row_values)
                 print("Wrote Google Sheets row for story: " + str(story['Title']))
@@ -292,7 +290,6 @@ def write_to_gsheet(story_data):
 
 
 def run_program():
-
     write_to_excel_boolean = True
     x = input("Would you like to write your Medium.com data to Excel?\n'Y' for Yes, 'N' for No.")
     if 'n' in x.lower():
@@ -306,7 +303,7 @@ def run_program():
     if 'y' in y.lower():
         write_to_google_sheet = True
 
-    #Login to Medium with Google
+    # Login to Medium with Google
     login_google()
 
     # go to stats page - you are now logged in to your Medium account
@@ -318,7 +315,7 @@ def run_program():
 
         story_titles = []  # story titles
         story_links = []  # links to story data pages
-        story_fans = [] #fans of each story
+        story_fans = []  # fans of each story
 
         # default data is on views
         soup = BeautifulSoup(browser.page_source, 'html.parser')
@@ -345,11 +342,9 @@ def run_program():
     spanTag = soup.find_all("span")
 
     for story in divTag:
-
         story_titles.append(story.text)
 
     for div in divTag:
-
         story_links.append(div.find('a')['href'])
 
     span_id = 0
@@ -367,14 +362,12 @@ def run_program():
             fans = str(spanTag[span_id].text)
             story_fans.append(fans)
 
-
         span_id += 1
 
     story_data = []
     i = 0
 
     while i < len(story_titles):
-
         create_story_row = {'Title': story_titles[i],
                             'Published Date': "",
                             'Publication': "Self-Published",
@@ -389,8 +382,7 @@ def run_program():
 
         i = i + 1
 
-
-    #Start Grabbing Data from Individual Story Pages
+    # Start Grabbing Data from Individual Story Pages
     for story in story_data:
 
         publication = "Self-Published"
@@ -405,13 +397,13 @@ def run_program():
         story_pTags = story_data_page_html.find_all("p")
         story_h4tags = story_data_page_html.find_all("h4")
 
-        #Get all the Data stored in the H2 Tags
+        # Get all the Data stored in the H2 Tags
         for h2 in story_h2Tag:
 
             try:
                 h2_text = str(h2.text)
 
-                #Get the Story Views Data
+                # Get the Story Views Data
                 try:
                     story_views = int(h2_text)
                     if story_views >= 0:
@@ -424,7 +416,7 @@ def run_program():
                     except:
                         pass
 
-                #Get the Time Viewed Data
+                # Get the Time Viewed Data
                 try:
                     if "sec" in h2_text or "min" in h2_text or "hr" in h2_text:
                         if len(story['Average Time Viewed']) > 0:
@@ -434,7 +426,7 @@ def run_program():
                 except:
                     pass
 
-                #Get the Earnings Data
+                # Get the Earnings Data
                 try:
                     if "$" in h2_text:
                         if story['Earnings'] == "$0.00":
@@ -448,10 +440,10 @@ def run_program():
                     pass
 
             except:
-                #H2 tag doesn't have text
+                # H2 tag doesn't have text
                 pass
 
-        #Get the Published Date and Publication Data
+        # Get the Published Date and Publication Data
         for h4tag in story_h4tags:
 
             try:
@@ -463,7 +455,7 @@ def run_program():
                     if "in" in published_date:
                         in_position = published_date.find("in")
                         published_date_fixed = published_date[0:in_position].lstrip().rstrip().capitalize()
-                        publication = published_date[in_position+3:].lstrip().rstrip().capitalize()
+                        publication = published_date[in_position + 3:].lstrip().rstrip().capitalize()
 
                     story['Published Date'] = published_date_fixed
                     story['Publication'] = publication
@@ -492,6 +484,7 @@ def run_program():
     # close the webdriver (Chrome window)
 
     browser.close()
+
 
 print("Medium Statzler")
 print("Author: Nick Canfield @ Process Zip")
