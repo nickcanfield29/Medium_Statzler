@@ -24,9 +24,9 @@ time_authentication = 15
 
 # GOOGLE SHEET INFO
 global google_sheet_workbook
-google_sheet_workbook = "Medium Data"  # This is the name of your Google Sheets workbook that you have already created where you want to save the data
+google_sheet_workbook = "Medium Data Workbook"  # This is the name of your Google Sheets workbook that you have already created where you want to save the data
 global google_sheet_workbook_sheet
-google_sheet_workbook_sheet = "Medium Data"  # This is the name of the Google Sheets sheet inside of your workbook
+google_sheet_workbook_sheet = "Data Sheet"  # This is the name of the Google Sheets sheet inside of your workbook
 
 # Time to switch to new pages in seconds
 global time_switchpages
@@ -37,14 +37,12 @@ today = str(datetime.datetime.now().date())
 
 ############################ GOOGLE CHROMEDRIVE & API CREDS INFO
 global path_chromedriver
-path_chromedriver = "C:/Users/......exe"
+path_chromedriver = "C:/Users/asus/Downloads/chromedriver_win32/chromedriver.exe"
 # Download the chromedriver here: https://chromedriver.chromium.org/downloads
 # Make sure you use the right one for your version of Chrome!
 
 global google_api_creds_filepath
-google_api_creds_filepath = "C:/Users/.....json"
-
-
+google_api_creds_filepath = "C:/Users/asus/PycharmProjects/MediumStats_Dashboarder/client_secret.json"
 # To get your Google Sheets credentials .json file, follow the steps here: https://www.analyticsvidhya.com/blog/2020/07/read-and-update-google-spreadsheets-with-python/
 
 
@@ -81,7 +79,7 @@ def login_google():
     # Might not work. If not, you can manually login when the program asks you to do so.
 
     try:
-
+        print("Trying to login to Medium with Google info...")
         # Will try to login to Medium.com using Google Login
 
         google_button = browser.find_element_by_xpath('//button[0]').click()
@@ -106,7 +104,7 @@ def login_google():
 
     except:
         print("************************************")
-        print("Automatic login didn't work.\nPlease login and press enter when you're on the Medium.com homepage.")
+        print("Automatic Google login didn't work.\nPlease login and press enter when you're on the Medium.com homepage.")
 
         enter_entry = "."
 
