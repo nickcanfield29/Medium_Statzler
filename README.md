@@ -11,7 +11,8 @@ Nick Canfield & Process Zip (https://processzip.com)
 
 # SETUP
 To see how to set up this program, please read my article at Medium.com here: https://medium.com/@nickcanfield29/medium-statzler-grab-your-medium-articles-stats-with-ease-36aea736944a?source=friends_link&sk=edcb42ab1b6e9a7308b635181e0aa55f
-Watch the setup video here: https://www.youtube.com/watch?v=v71ihDqYh6E&fbclid=IwAR0_MoVKNfBDXOtZCeb653DwB8b6EV8R0fM_jIzSRc5Ri9l9_l8jj3Edghk
+
+Watch the setup video here: https://youtu.be/v71ihDqYh6E
 
 # HELP ME
 If you want to contribute to this repo, I'm all ears!
