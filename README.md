@@ -1,4 +1,4 @@
-# Medium_Statzler
+![alt text](https://github.com/nickcanfield29/Medium_Statzler/blob/master/Statzler_Logo.jpg?raw=true)
 #####################################
 DESCRIPTION:
 This program grabs your Medium.com article stats and sends them to a Google Sheet and/or Excel file!
