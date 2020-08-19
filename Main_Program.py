@@ -229,6 +229,8 @@ def write_to_excel(story_data):
         row += 1
 
     workbook.close()
+    current_working_directory = os.getcwd()
+    os.startfile(current_working_directory + "/" + fileName)
 
 
 def write_to_gsheet(story_data):
